@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/vue@3"></script>
+    <script defer src="vue.js" type=""></script>
+    <title>routine</title>
+</head>
+
+<body class="bg-dark">
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 z-index-100">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto text-danger">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                course everlaps
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive" id="tableDiv">
+        <table class=" table align-middle table-bordered border-primary">
+            <thead class="text-light text-center">
+                <tr>
+                    <th>Time/Day</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+
+            </thead>
+            <tbody class="text-light text-center">
+                <tr>
+                    <th class="time-th">08:00 AM-09:20 AM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">09:30 AM-10:50 AM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">11:00 AM-12:20 PM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">12:30 PM-01:50 PM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">02:00 PM-03:20 PM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">03:30 PM-04:50 PM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th class="time-th">05:00 PM-06:20 PM</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <form class="">
+            <div class="mb-3 m-1 ">
+                <!-- <label for="" class="form-label">search course</label> -->
+                <input type="text" class="form-control bg-dark text-light" v-model='mainInput' placeholder="search"
+                    aria-describedby="emailHelp">
+                <!-- <div id="emailHelp" class="form-text">hint</div> -->
+            </div>
+        </form>
+
+        <table id="customers" class="table table-bordered  table-dark table-hover table-striped">
+            <thead>
+                <tr>
+                    <th style="margin-left: 10px;">save</th>
+                    <!-- course code -->
+                    <td class="bg-dark">
+                        <div class="dropdown bg-dark">
+                            <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                course Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark overflow-auto" style="height:40vh ;">
+                                <div class="input-group  bg-dark  mb-1">
+                                    <input type="text" class="form-control border-0 bg-dark " placeholder="course code">
+                                </div>
+                                <li v-for="courseName in options['course Code']">
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox">
+                                        {{courseName}}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </td>
+                    <!-- program -->
+                    <td>
+                        <div class="dropdown bg-dark">
+                            <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Program
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark overflow-auto" style="height:40vh ;">
+                                <div class="input-group  bg-dark  mb-1">
+                                    <input type="text" class="form-control border-0 bg-dark " placeholder="course code">
+                                </div>
+                                <li v-for="Program in options['Program']"><a class="dropdown-item"
+                                        href="#">{{Program}}</a></li>
+
+                            </ul>
+                        </div>
+                    </td>
+                    <!-- faculty -->
+                    <td>
+                        <div class="dropdown bg-dark">
+                            <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Faculty
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark overflow-auto" style="height:40vh ;">
+                                <div class="input-group  bg-dark  mb-1">
+                                    <input type="text" class="form-control border-0 bg-dark " placeholder="course code">
+                                </div>
+                                <li v-for="Faculty in options['Faculty']"><a class="dropdown-item"
+                                        href="#">{{Faculty}}</a></li>
+
+                            </ul>
+                        </div>
+                    </td>
+                    <!-- section -->
+                    <td>
+                        section
+
+                    </td>
+                    <td>Day, Time, Room</td>
+                    <!-- <td>Credit</td> -->
+                    <td>Total Seat</td>
+                    <!-- <td>Seat Booked</td>
+                    <td>Seat Remaining</td> -->
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="row in filtered">
+                    <td><input style=" margin-left: 10px;" type="checkbox" v-on:click="selectCourse"></td>
+                    <td>{{row['course Code']}}</td>
+                    <td>{{row['Program']}}</td>
+                    <td>{{row['Faculty']}}</td>
+
+                    <td>{{row['Section']}}</td>
+                    <!-- <td>{{row['Day, Time, Room']}}</td> -->
+                    <td>
+                        <li v-for="time in row['Day, Time, Room']">{{time}}</li>
+                    </td>
+                    <!-- <td>{{row['Credit']}}</td> -->
+                    <td>{{row['Total Seat']}}</td>
+                    <!-- <td>{{row['Seat Booked']}}</td>
+                    <td>{{row['Seat Remaining']}}</td> -->
+
+                </tr>
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
