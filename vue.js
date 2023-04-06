@@ -61,23 +61,20 @@ createApp({
 
             try {
                 let table
-                if (localStorage.getItem("courseArr")) {
 
-                    table = parser.parseFromString(localStorage.getItem("courseArr"), 'text/html').body.querySelector("#customers");
-                } else {
-                    const tempdata = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://admissions.bracu.ac.bd/academia/admissionRequirement/getAvailableSeatStatus')}`);
-                    const htmlData = await tempdata.text()
+                const tempdata = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('http://admissions.bracu.ac.bd/academia/admissionRequirement/getAvailableSeatStatus')}`);
+                const htmlData = await tempdata.text()
+                console.log(tempdata)
+                table = parser.parseFromString(htmlData, 'text/html').body.querySelector("#customers");
 
-                    table = parser.parseFromString(htmlData, 'text/html').body.querySelector("#customers");
-                    localStorage.setItem('courseArr', htmlData)
-                }
+
 
 
                 // remove predefined styles
                 table.querySelectorAll("td").forEach((e) => { e.setAttribute("style", "") })
                 //adding table classes
                 // table.classList.add("table", "table-bordered", "table-dark", "table-hover", "table-striped")
-                // console.log(table)
+
 
                 let tHeader = table.querySelector("thead")
                 let tbody = table.querySelector("tbody")
@@ -86,8 +83,6 @@ createApp({
 
                 let headerColumns = tHeader.querySelectorAll("td")
                 // headerColumns.forEach(e => { this.options[e.innerText.trim()] = new Set() })
-
-
                 rows.forEach(row => {
                     let tempRow = {
                         "course Code": row.children[1].innerText,
@@ -100,14 +95,10 @@ createApp({
                         "Seat Booked": row.children[8].innerText,
                         "Seat Remaining": row.children[9].innerText
                     }
-
-                    // console.log(row.children[6].innerText)
                     this.data.push(tempRow)
-
-
                 })
 
-                // document.querySelector("#customers").append(tbody)
+
             } catch (e) {
                 console.log(e);
             }
@@ -135,7 +126,7 @@ createApp({
 
 
                     if (elem.textContent.includes(timeRange)) {
-                        console.log(elem.parentNode)
+
                         let index
                         if (day == "Su") index = 1
                         if (day == 'Mo') index = 2
@@ -148,11 +139,12 @@ createApp({
                         if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
                             elem.parentNode.childNodes[index].innerText = `${courseName}-${facultyInitial}-${buildingNumber}`
                         } else if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
-
                             const toastElem = document.getElementById('liveToast')
                             toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${courseName}`
                             const toast = new bootstrap.Toast(toastElem)
                             toast.show()
+                        } else if (!isSelected) {
+                            elem.parentNode.childNodes[index].innerText = ''
                         }
                     }
                 }
