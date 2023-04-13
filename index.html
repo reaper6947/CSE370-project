@@ -12,25 +12,15 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
     <script defer src="https://unpkg.com/vue@3"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+        integrity="sha256-6H5VB5QyLldKH9oMFUmjxw2uWpPZETQXpCkBaDjquMs=" crossorigin="anonymous"></script>
     <script defer src="vue.js" type=""></script>
     <title>routine</title>
 </head>
 
-<body class="bg-dark">
-
-    <div class="toast-container position-fixed bottom-0 end-0 p-3 z-index-100">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto text-danger">Error</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                course everlaps
-            </div>
-        </div>
-    </div>
-    <div class="table-responsive" id="tableDiv">
-        <table class=" table align-middle table-bordered border-primary">
+<body class="bg-dark" id="tableDiv" class="table-responsive">
+    <div class="table-responsive">
+        <table class=" table align-middle table-bordered border-primary" id="routine-table">
             <thead class="text-light text-center">
                 <tr>
                     <th>Time/Day</th>
@@ -117,18 +107,16 @@
                 </tr>
 
             </tbody>
+            <form class="">
+                <div class="input-group mb-1 p-2 ">
+                    <input type="text" class="form-control bg-dark text-light" v-model='mainInput' placeholder="search">
+                </div>
+            </form>
         </table>
-        <form class="">
-            <div class="input-group mb-3 m-1 ">
-                <!-- <label for="" class="form-label">search course</label> -->
-                <input type="text" class="form-control bg-dark text-light" v-model='mainInput' placeholder="search"
-                    aria-describedby="emailHelp">
-                <!-- <button class="btn btn-outline-secondary " type="button" id="">Download</button> -->
-                <!-- <div id="emailHelp" class="form-text">hint</div> -->
-            </div>
-        </form>
+    </div>
 
-        <table id="customers" class="table table-bordered  table-dark table-hover table-striped">
+    <div class="table-responsive">
+        <table id="course-table" class="table table-bordered  table-dark table-hover table-striped">
             <thead>
                 <tr>
                     <th style="margin-left: 10px;">save</th>
@@ -225,7 +213,17 @@
 
     </div>
 
+    <div class="toast-container position-fixed top-0 end-0 p-3 z-index-100">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto text-danger">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
 
+            </div>
+        </div>
+    </div>
 
 
 </body>

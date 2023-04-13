@@ -61,14 +61,10 @@ createApp({
 
             try {
                 let table
-
-                const tempdata = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('http://admissions.bracu.ac.bd/academia/admissionRequirement/getAvailableSeatStatus')}`);
+                const url = 'https://corsproxy.io/?' + encodeURIComponent('https://admissions.bracu.ac.bd/academia/admissionRequirement/getAvailableSeatStatus');
+                const tempdata = await fetch(`${url}`);
                 const htmlData = await tempdata.text()
-                console.log(tempdata)
                 table = parser.parseFromString(htmlData, 'text/html').body.querySelector("#customers");
-
-
-
 
                 // remove predefined styles
                 table.querySelectorAll("td").forEach((e) => { e.setAttribute("style", "") })
@@ -115,6 +111,9 @@ createApp({
             let timingArrVals = []
             timingsArr.forEach(e => timingArrVals.push(e.innerText))
             const allThs = document.querySelectorAll(".time-th")
+
+
+
             timingArrVals.forEach((e) => {
                 const timingsText = e.slice(3, e.length - 1)
 
@@ -136,25 +135,47 @@ createApp({
                         if (day == 'Fr') index = 6
                         if (day == 'Sa') index = 7
 
-                        if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
-                            elem.parentNode.childNodes[index].innerText = `${courseName}-${facultyInitial}-${buildingNumber}`
-                        } else if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
+
+
+                        if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
+                            event.target.checked = false
                             const toastElem = document.getElementById('liveToast')
-                            toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${courseName}`
+                            toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${elem.parentNode.childNodes[index].innerText}`
                             const toast = new bootstrap.Toast(toastElem)
                             toast.show()
+
+                            break
+                        } else if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
+                            elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
                         } else if (!isSelected) {
                             elem.parentNode.childNodes[index].innerText = ''
                         }
+
+
+                        // if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
+                        //     elem.parentNode.childNodes[index].innerText = `${courseName}-${facultyInitial}-${buildingNumber}`
+                        //     console.log(event.target)
+                        // } else if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
+                        //     event.target.checked = false
+                        //     const toastElem = document.getElementById('liveToast')
+                        //     toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${courseName}`
+                        //     const toast = new bootstrap.Toast(toastElem)
+                        //     toast.show()
+                        // } else if (!isSelected) {
+                        //     elem.parentNode.childNodes[index].innerText = ''
+                        // }
                     }
                 }
+
             })
 
-            console.log(isSelected, courseName, facultyInitial, sectionNumber, timingArrVals)
+            // console.log(isSelected, courseName, facultyInitial, sectionNumber, timingArrVals)
 
 
 
-        }
+        },
+
+
     },
     mounted() {
         this.getData()
