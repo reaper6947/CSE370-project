@@ -7,7 +7,6 @@ createApp({
             data: [],
             curr: [],
             saved: [],
-
             mainInput: "",
             filterArg: {
                 "course Code": [],
@@ -43,7 +42,7 @@ createApp({
                 tempOptions[arg] = new Set()
             }
 
-            for (let row of this.filtered) {
+            for (let row of this.data) {
                 for (let key in tempOptions) {
                     tempOptions[key].add(row[key])
 
@@ -100,7 +99,6 @@ createApp({
             }
         },
         async selectCourse(event) {
-
             const isSelected = event.target.checked
             currentRow = event.target.parentNode.parentNode
             const courseName = currentRow.childNodes[1].innerText
@@ -112,8 +110,7 @@ createApp({
             timingsArr.forEach(e => timingArrVals.push(e.innerText))
             const allThs = document.querySelectorAll(".time-th")
 
-
-
+            let isAvailable = true
             timingArrVals.forEach((e) => {
                 const timingsText = e.slice(3, e.length - 1)
 
@@ -122,10 +119,7 @@ createApp({
                 const timeRange = timingsText.split('UB')[0].slice(0, -1)
 
                 for (let elem of allThs) {
-
-
                     if (elem.textContent.includes(timeRange)) {
-
                         let index
                         if (day == "Su") index = 1
                         if (day == 'Mo') index = 2
@@ -135,46 +129,76 @@ createApp({
                         if (day == 'Fr') index = 6
                         if (day == 'Sa') index = 7
 
-
-
                         if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
+                            isAvailable = false
                             event.target.checked = false
                             const toastElem = document.getElementById('liveToast')
                             toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${elem.parentNode.childNodes[index].innerText}`
                             const toast = new bootstrap.Toast(toastElem)
                             toast.show()
-
-                            break
-                        } else if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
-                            elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
-                        } else if (!isSelected) {
-                            elem.parentNode.childNodes[index].innerText = ''
                         }
-
-
-                        // if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
-                        //     elem.parentNode.childNodes[index].innerText = `${courseName}-${facultyInitial}-${buildingNumber}`
-                        //     console.log(event.target)
-                        // } else if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
-                        //     event.target.checked = false
-                        //     const toastElem = document.getElementById('liveToast')
-                        //     toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${courseName}`
-                        //     const toast = new bootstrap.Toast(toastElem)
-                        //     toast.show()
-                        // } else if (!isSelected) {
-                        //     elem.parentNode.childNodes[index].innerText = ''
-                        // }
                     }
                 }
 
+                if (isAvailable == false) {
+                    return
+                }
+
+                for (let elem of allThs) {
+                    if (elem.textContent.includes(timeRange)) {
+                        let index
+                        if (day == "Su") index = 1
+                        if (day == 'Mo') index = 2
+                        if (day == 'Tu') index = 3
+                        if (day == 'We') index = 4
+                        if (day == 'Th') index = 5
+                        if (day == 'Fr') index = 6
+                        if (day == 'Sa') index = 7
+                        if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
+                            elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
+                        } else if (isSelected == false && elem.parentNode.childNodes[index].innerText != '') {
+                            elem.parentNode.childNodes[index].innerText = ""
+                        }
+                    }
+                }
             })
 
             // console.log(isSelected, courseName, facultyInitial, sectionNumber, timingArrVals)
 
-
-
         },
+        async selectProgram(event) {
+            event.target.parentNode.parentNode.parentNode.querySelector('a').innerText = event.target.innerText
+            console.log(event.target.parentNode.parentNode.parentNode.querySelector('a'))
+            this.filterArg["Program"] = [event.target.innerText]
+        },
+        async resetProgram(event) {
+            this.filterArg["Program"] = []
+        },
+        async selectFaculty(event) {
+            if (event.target.checked) {
+                this.filterArg["Faculty"].push(event.target.parentNode.innerText)
+            } else {
+                for (let i = 0; i < this.filterArg["Faculty"].length; i++) {
 
+                    if (this.filterArg["Faculty"][i].includes(event.target.parentNode.innerText)) {
+                        this.filterArg["Faculty"].splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+        },
+        async selectCourse(event) {
+            if (event.target.checked) {
+                this.filterArg["course Code"].push(event.target.parentNode.innerText)
+            } else {
+                for (let i = 0; i < this.filterArg["course Code"].length; i++) {
+                    if (this.filterArg["course Code"][i].includes(event.target.parentNode.innerText)) {
+                        this.filterArg["course Code"].splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+        }
 
     },
     mounted() {
