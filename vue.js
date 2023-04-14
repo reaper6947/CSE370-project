@@ -187,7 +187,7 @@ createApp({
                 }
             }
         },
-        async selectCourse(event) {
+        async selectCourseFromDropDown(event) {
             if (event.target.checked) {
                 this.filterArg["course Code"].push(event.target.parentNode.innerText)
             } else {

@@ -135,7 +135,7 @@
                                     <input type="text" class="form-control border-0 bg-dark " placeholder="course code">
                                 </div> -->
                                 <li v-for="courseName in options['course Code']" class="d-flex flex-row m-1">
-                                    <input class="m-1" type="checkbox" v-on:click="selectCourse">
+                                    <input class="m-1" type="checkbox" v-on:click="selectCourseFromDropDown">
                                     <a class="dropdown-item" href="#">{{courseName}}</a>
                                 </li>
 
