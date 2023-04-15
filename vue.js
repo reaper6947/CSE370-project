@@ -3,7 +3,11 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
+            window,
+            loggedIn: false,
+            auth0Client: null,
 
+            user: "",
             data: [],
             curr: [],
             saved: [],
@@ -198,10 +202,81 @@ createApp({
                     }
                 }
             }
+        },
+
+        async login(targetUrl) {
+            try {
+                console.log("Logging in", targetUrl);
+
+                const options = {
+                    authorizationParams: {
+                        redirect_uri: window.location.origin
+                    }
+                };
+
+                if (targetUrl) {
+                    options.appState = { targetUrl };
+                }
+
+                await this.auth0Client.loginWithRedirect(options);
+
+            } catch (err) {
+                console.log("Log in failed", err);
+            }
+        },
+        async logout() {
+            try {
+                console.log("Logging out");
+                await this.auth0Client.logout({
+                    logoutParams: {
+                        returnTo: window.location.origin
+                    }
+                });
+            } catch (err) {
+                console.log("Log out failed", err);
+            }
+        },
+        async configureClient() {
+            const config = {
+                "domain": "dev-byqyk3bvatosei5p.us.auth0.com",
+                "clientId": "OUuZb4YprerDwWoQ4aVqzWeFd8vh7tvh"
+            }
+            this.auth0Client = await auth0.createAuth0Client({
+                domain: config.domain,
+                clientId: config.clientId
+            });
+            const query = this.window.location.search;
+            const shouldParseResult = query.includes("code=") && query.includes("state=");
+            if (shouldParseResult) {
+                console.log("> Parsing redirect");
+                try {
+                    const result = await this.auth0Client.handleRedirectCallback();
+
+                    // if (result.appState && result.appState.targetUrl) {
+                    //     showContentFromUrl(result.appState.targetUrl);
+                    // }
+
+                    console.log("Logged in!");
+                } catch (err) {
+                    console.log("Error parsing redirect:", err);
+                }
+
+                this.window.history.replaceState({}, document.title, "/");
+            }
+
+            if (await this.auth0Client.isAuthenticated()) {
+                this.loggedIn = true
+                const user = await this.auth0Client.getUser();
+                console.log(user)
+                this.user = user
+
+            }
         }
 
     },
-    mounted() {
+    async mounted() {
         this.getData()
+        this.configureClient();
+
     }
 }).mount('#tableDiv')

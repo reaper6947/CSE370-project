@@ -11,14 +11,52 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
-    <script defer src="https://unpkg.com/vue@3"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
         integrity="sha256-6H5VB5QyLldKH9oMFUmjxw2uWpPZETQXpCkBaDjquMs=" crossorigin="anonymous"></script>
     <script defer src="vue.js" type=""></script>
-    <title>routine</title>
+    <title>routine app</title>
 </head>
 
 <body class="bg-dark min-vh-100 " id="tableDiv">
+    <nav class="navbar bg-dark border border-success">
+
+        <div class="container-fluid">
+            <a class="navbar-brand text-light" href="/">Routine App
+                <!-- <button class="navbar-brand btn text-light border-0 shadow-none">Home</button> -->
+            </a>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <!-- <button class="btn btn-primary me-md-2" type="button">Button</button> -->
+                <!-- <button  class="btn btn-primary" type="button">login</button> -->
+                <div>
+                    <div v-if="loggedIn" class="dropdown  border-0 dropstart ">
+                        <button class="btn btn-secondary dropdown-toggle bg-dark shadow-none border-0" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img width="35" class="rounded-circle" v-bind:src="user.picture" alt="stuff">
+                        </button>
+                        <ul class="dropdown-menu text-light">
+                            <li><a class="dropdown-item" href="#">{{user.name}}</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    href="#">Profile</a></li>
+                            <li><a v-on:click="logout" class="dropdown-item" href="#">Logout</a></li>
+
+                        </ul>
+                    </div>
+
+
+                    <button v-else v-on:click="login" class="btn btn-primary" type="button">login</button>
+                    <!-- <button v-else class="btn btn-primary" type="button">logout</button> -->
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
     <div class="table-responsive">
         <table class=" table align-middle table-bordered border-success table-sm table-hover" id="routine-table">
             <thead class="text-light text-center">
@@ -227,6 +265,25 @@
             </div>
             <div class="toast-body">
 
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">User information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <img v-bind:src="user.picture" class="d-flex justify-content-center rounded" alt="">
+                    <li class="h5">NAME: {{user.name}}</li>
+                    <li class="h5">EMAIL: {{user.email}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
