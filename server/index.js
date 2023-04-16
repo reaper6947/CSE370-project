@@ -163,13 +163,31 @@ app.put("/student/course/unselect", async (req, res) => {
 
 app.post('/admin/blacklist/post', async (req, res) => {
     try {
-        const db = await dbConnect()
-        const adminInput = db.query("INSERT INTO blacklist (email) values(?)", [req.body.email])
 
+        const db = await dbConnect()
+        const adminInput = await db.query("INSERT INTO blacklist (email) values(?)", [req.body.email])
         res.json({})
     } catch (e) {
         console.log(e)
     }
+})
+
+app.get('/admin/blacklist/get', async (req, res) => {
+    try {
+
+        const db = await dbConnect()
+        const adminInput = await db.query("SELECT * from blacklist")
+        res.json(adminInput[0])
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+app.post('/admin/blacklist/remove', async (req, res) => {
+    const db = await dbConnect()
+
+    const removeEmail = db.query("DELETE FROM blacklist where email=?", [req.body.email])
+    res.json({})
 })
 
 app.post("/student/course/get-saved-data", async (req, res) => {

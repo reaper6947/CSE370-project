@@ -9,7 +9,8 @@ createApp({
             baseUrl: "http://localhost:5000",
             isAdmin: false,
             blacklistEmail: "",
-            blacklistArr: ['someont@gmail.com'],
+            amIBlackListed: false,
+            blacklistArr: [],
             adminText: '',
             user: "",
             data: [],
@@ -244,6 +245,8 @@ createApp({
             }
         },
 
+
+
         async login(targetUrl) {
             try {
                 console.log("Logging in", targetUrl);
@@ -276,6 +279,12 @@ createApp({
                 console.log("Log out failed", err);
             }
         },
+
+
+
+
+
+
         async configureClient() {
             const config = {
                 "domain": "dev-byqyk3bvatosei5p.us.auth0.com",
@@ -291,10 +300,6 @@ createApp({
                 console.log("> Parsing redirect");
                 try {
                     const result = await this.auth0Client.handleRedirectCallback();
-
-                    // if (result.appState && result.appState.targetUrl) {
-                    //     showContentFromUrl(result.appState.targetUrl);
-                    // }
 
                     console.log("Logged in!");
                 } catch (err) {
@@ -425,18 +430,74 @@ createApp({
                 console.log(e)
             }
         },
-        async postBlacklist() {
+        async postBlacklist(event) {
+            event.preventDefault()
             try {
+                let email = document.querySelector('#blacklistInput')
+                this.blacklistArr = [...this.blacklistArr, email.value]
+
+                let temp = email.value
+                console.log(email.value)
                 const data = await fetch(this.baseUrl + "/admin/blacklist/post", {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email: this.blacklistEmail })
+                    body: JSON.stringify({ email: temp })
                 })
-                this.blacklistArr.push(this.blacklistEmail)
+                email.value = ""
+
                 let resp = await data.json()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+        async removeBlacklist(event) {
+            event.preventDefault()
+
+            let target = event.target.parentNode
+            let targetEmail = target.childNodes[0].innerText
+            console.log(targetEmail.trim())
+            target.parentNode.removeChild(target);
+            try {
+                const data = await fetch(this.baseUrl + "/admin/blacklist/remove", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }, body: JSON.stringify({ email: targetEmail.trim() })
+
+                })
+
+                let resp = await data.json()
+                console.log(resp)
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+        async getBlackList() {
+            try {
+                const data = await fetch(this.baseUrl + "/admin/blacklist/get", {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+
+                })
+                let resp = await data.json()
+
+                resp.forEach((e) => {
+                    this.blacklistArr.push(e.email)
+                    if (this.user.email == e.email) {
+                        this.amIBlackListed = true
+                    }
+                })
+                console.log(this.amIBlackListed)
+
             } catch (e) {
                 console.log(e)
             }
@@ -458,6 +519,10 @@ createApp({
             } catch (e) {
                 console.log(e)
             }
+        },
+
+        async preventLogin() {
+
         }
 
 
@@ -466,6 +531,7 @@ createApp({
         await this.getData()
         await this.configureClient();
         await this.getAdmin()
+        await this.getBlackList()
 
     }
 }).mount('#tableDiv')

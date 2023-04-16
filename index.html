@@ -24,6 +24,9 @@
 <body class="bg-dark min-vh-100 " id="tableDiv">
     <nav class="nav-sec navbar p-4">
 
+
+
+
         <div class="container">
             <a class="nav navbar-brand">Routine App</a>
 
@@ -56,6 +59,9 @@
             </div>
         </div>
 
+
+
+
         <div class="offcanvas offcanvas-start" tabindex="-1" id="exampleModal" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
@@ -81,7 +87,7 @@
         </div>
     </nav>
 
-    <div v-if="!isAdmin" class="live-tab table-responsive px-4">
+    <div v-if="!isAdmin && !amIBlackListed" class="live-tab table-responsive px-4">
         <table class=" table align-middle table-bordered table-dark table-sm table-hover" id="routine-table">
             <thead class="text-light text-center">
                 <tr>
@@ -174,15 +180,14 @@
 
         <form>
             <div class="input-group mb-1 pt-4 ">
-                <input type="text" class="search-inp form-control bg-dark text-light" v-model='mainInput'
-                    placeholder="search">
+
                 <!-- <button class="btn btn-outline-secondary" type="button">Reset search</button> -->
 
             </div>
         </form>
     </div>
 
-    <div v-if="!isAdmin" class="table-responsive min-vh-100 p-4">
+    <div v-if="!isAdmin && !amIBlackListed" class="table-responsive min-vh-100 p-4">
         <table id="course-table" class="table table-bordered  table-dark table-sm table-hover text-center ">
             <thead>
                 <tr>
@@ -295,28 +300,29 @@
         </div>
     </div>
 
-    <div v-if="isAdmin" class="inp">
-        <div>
-            <h2>White-List</h2>
-            <input type="text" placeholder="Input Box 1">
-            <button class="btn">Submit</button>
+    <div v-if="isAdmin && !amIBlackListed" class="inp">
 
-            <div class="adding-list">
-                <li>List Item 1</li>
-                <li>List Item 2</li>
-                <li>List Item 3</li>
-            </div>
-        </div>
         <div>
             <h2>Black-List</h2>
-            <input :value="blacklistEmail" type="text" placeholder="Input Box 2">
+            <!-- <input id="blacklistInput" placeholder="Input Box 2"> -->
+            <input id="blacklistInput" type="text" placeholder="email" aria-label="Username"
+                aria-describedby="basic-addon1">
             <button class="btn" v-on:click="postBlacklist">Submit</button>
 
             <div class="adding-list">
-                <li v-for="email in blacklistArr">{{email}} <button class="btn">remove</button></li>
+                <div v-for="email in blacklistArr">
+                    <li>{{email}} </li>
+                    <button v-on:click="removeBlacklist" class="btn">remove</button>
+                </div>
+
 
             </div>
         </div>
+
+    </div>
+
+    <div v-if="amIBlackListed" class="inp">
+        <h1>access denied</h1>
 
     </div>
 
@@ -324,25 +330,7 @@
 
 
 
-    <!-- <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">User information</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body ">
-                    <img v-bind:src="user.picture" class="d-flex justify-content-center rounded" alt="">
-                    <li class="h5">NAME: {{user.name}}</li>
-                    <li class="h5">EMAIL: {{user.email}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-close btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
 
 
 </body>

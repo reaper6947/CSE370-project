@@ -54,12 +54,6 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  `whitelist` (
-    `id` int primary key AUTO_INCREMENT,
-    `email` varchar(255)
-  );
-
-CREATE TABLE
   `admin_table` (
     `id` int primary key AUTO_INCREMENT,
     `admin_email` varchar(255) UNIQUE,
