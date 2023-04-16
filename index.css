@@ -1,0 +1,64 @@
+.nav{
+    font-weight: 600;
+    font-size: 25px;
+    color: #FF8A1F;
+    cursor: pointer;
+}
+
+.nav:hover{
+    color: #ad6119;
+    transition: .5s;
+
+}
+
+.btn{
+    background-color: #ff8b1fe7;
+    border: #ff8b1fe7;
+}
+
+.btn:hover{
+    background-color: #ff8b1f8e;
+    border: #ff8b1fad;
+    transition: .5s;
+
+}
+
+.nav-sec{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: rgba(58, 57, 57, 0.247);
+}
+
+.live-tab{
+    padding-top: 40px;
+
+}
+
+.input-group{
+    padding-top: 10px;
+}
+
+.time-th{
+    width: 400px;
+}
+
+.search-inp:focus{
+    border-color: #FF8A1F;
+
+}
+
+.days{
+    width: 700px;
+}
+
+.seats{
+    width: 150px;
+
+}
+
+.sec{
+    width: 100px;
+}
+
+.save{
+    width: 100px;
+}
