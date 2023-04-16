@@ -55,25 +55,24 @@
 
             </div>
         </div>
-          
+
         <div class="offcanvas offcanvas-start" tabindex="-1" id="exampleModal" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-              <div class="modal-body">
-                <img v-bind:src="user.picture" class="pic" alt="">
-                <li class="h5">{{user.name}}</li>
-                <li class="h6">{{user.email}}</li>
-              </div>
+                <div class="modal-body">
+                    <img v-bind:src="user.picture" class="pic" alt="">
+                    <li class="h5">{{user.name}}</li>
+                    <li class="h6">{{user.email}}</li>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="live-tab table-responsive px-4">
-        <table class=" table align-middle table-bordered table-dark table-sm table-hover"
-            id="routine-table">
+        <table class=" table align-middle table-bordered table-dark table-sm table-hover" id="routine-table">
             <thead class="text-light text-center">
                 <tr>
                     <th>Time/Day</th>
@@ -163,9 +162,10 @@
 
         </table>
 
-        <form >
+        <form>
             <div class="input-group mb-1 pt-4 ">
-                <input type="text" class="search-inp form-control bg-dark text-light" v-model='mainInput' placeholder="search">
+                <input type="text" class="search-inp form-control bg-dark text-light" v-model='mainInput'
+                    placeholder="search">
                 <!-- <button class="btn btn-outline-secondary" type="button">Reset search</button> -->
 
             </div>
@@ -249,7 +249,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="row in filtered">
+                <tr v-for="row in filtered" class="course-row">
                     <td><input type="checkbox" v-on:click="selectCourse"></td>
                     <td>{{row['course Code']}}</td>
                     <td>{{row['Program']}}</td>
@@ -276,7 +276,7 @@
     <div class=" toast-container position-fixed bottom-0 end-0 p-3 z-index-100">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong class="me-auto text-danger">Error</strong>
+                <strong class="me-auto text-danger">Notification</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">

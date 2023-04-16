@@ -11,6 +11,7 @@ createApp({
             data: [],
             curr: [],
             saved: [],
+            takenCourseArr: [],
             mainInput: "",
             filterArg: {
                 "course Code": [],
@@ -110,16 +111,27 @@ createApp({
             const sectionNumber = currentRow.childNodes[4].innerText
             const timings = currentRow.childNodes[6]
             const totalSeat = currentRow.childNodes[8].innerText
-
+            const toastElem = document.getElementById('liveToast')
             const timingsArr = timings.querySelectorAll('li')
             let timingArrVals = []
             timingsArr.forEach(e => timingArrVals.push(e.innerText))
             const allThs = document.querySelectorAll(".time-th")
 
 
-            const courseObj = { email: this.user.email, courseName, facultyInitial, sectionNumber, totalSeat, timing: [] }
+            const courseObj = { courseName, facultyInitial, sectionNumber, totalSeat, timing: [] }
 
             let isAvailable = true
+
+
+            if (isSelected && this.takenCourseArr.includes(courseName)) {
+                isAvailable == false
+                event.target.checked = false
+                toastElem.querySelector(".toast-body").innerText = `Course ${courseName} already taken`
+                const toast = new bootstrap.Toast(toastElem)
+                toast.show()
+                return
+
+            }
 
             timingArrVals.forEach((e) => {
                 const timingsText = e.slice(3, e.length - 1)
@@ -143,10 +155,11 @@ createApp({
                         if (isSelected && elem.parentNode.childNodes[index].innerText != '') {
                             isAvailable = false
                             event.target.checked = false
-                            const toastElem = document.getElementById('liveToast')
+
                             toastElem.querySelector(".toast-body").innerText = `Course overlaps with ${elem.parentNode.childNodes[index].innerText}`
                             const toast = new bootstrap.Toast(toastElem)
                             toast.show()
+
                         }
                     }
                 }
@@ -168,17 +181,28 @@ createApp({
                         if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
                             elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
                             courseObj['timing'].push({ day, timeRange, buildingNumber })
+                            this.takenCourseArr.push(courseName)
                         } else if (isSelected == false && elem.parentNode.childNodes[index].innerText != '') {
                             elem.parentNode.childNodes[index].innerText = ""
+
+                            this.takenCourseArr.splice(this.takenCourseArr.indexOf(courseName), 1);
                         }
                     }
                 }
             })
 
-            if (isSelected && isAvailable) {
+            if (isSelected && isAvailable && this.user != "") {
 
-                this.sendCourseDetails(courseObj)
+                await this.sendSelectedCourseDetails({ ...courseObj, email: this.user.email, name: this.user.name })
             }
+
+            if (isSelected == false && this.user != "") {
+
+                await this.sendUnselectedCourseDetails({ ...courseObj, email: this.user.email, name: this.user.name })
+                this.takenCourseArr.splice(this.takenCourseArr.indexOf(obj.courseName), 1);
+            }
+
+
         },
         async selectProgram(event) {
             event.target.parentNode.parentNode.parentNode.querySelector('a').innerText = event.target.innerText
@@ -281,14 +305,14 @@ createApp({
                 const user = await this.auth0Client.getUser();
 
                 this.user = user
-
+                await this.getCourseDetails()
             }
         },
 
-        async sendCourseDetails(obj) {
+        async sendSelectedCourseDetails(obj) {
 
             try {
-                const data = await fetch(this.baseUrl + "/student/course/post", {
+                const data = await fetch(this.baseUrl + "/student/course/select", {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -296,7 +320,79 @@ createApp({
                     },
                     body: JSON.stringify(obj)
                 })
+                if (data.ok) {
+                    const toastElem = document.getElementById('liveToast')
+                    toastElem.querySelector(".toast-body").innerText = `Course enrolled successfully`
+                    const toast = new bootstrap.Toast(toastElem)
+                    toast.show()
+                }
 
+                if (data.status == 403) {
+                    const toastElem = document.getElementById('liveToast')
+                    toastElem.querySelector(".toast-body").innerText = `all seats are taken`
+                    const toast = new bootstrap.Toast(toastElem)
+                    toast.show()
+                }
+
+
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async sendUnselectedCourseDetails(obj) {
+
+            try {
+                const data = await fetch(this.baseUrl + '/student/course/unselect', {
+                    method: 'PUT', headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(obj)
+                })
+                if (data.ok) {
+
+                    console.log(await data.json())
+                }
+
+
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+
+        async getCourseDetails() {
+            try {
+                const data = await fetch(this.baseUrl + "/student/course/get-saved-data", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.user)
+                })
+                let resp = await data.json()
+                console.log()
+                const courseRow = document.querySelectorAll('.course-row')
+                resp.forEach((savedCourse) => {
+                    courseRow.forEach((e) => {
+                        const savedCourseName = savedCourse.course_code
+                        const savedSection = savedCourse.section_number
+                        let chkbox = e.querySelector('input')
+
+                        let course = e.children[1].innerText
+                        // let faculty = e.children[3].innerText
+                        let section = e.children[4].innerText
+                        if (savedCourseName == course && savedSection == section) {
+                            chkbox.setAttribute('checked', true)
+                            this.takenCourseArr.push(savedCourseName)
+                        }
+
+                    })
+                    // console.log(savedCourse)
+                })
+
+                console.log(resp)
             } catch (e) {
                 console.log(e)
             }
@@ -304,8 +400,8 @@ createApp({
 
     },
     async mounted() {
-        this.getData()
-        this.configureClient();
+        await this.getData()
+        await this.configureClient();
 
     }
 }).mount('#tableDiv')

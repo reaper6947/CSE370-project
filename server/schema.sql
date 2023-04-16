@@ -46,3 +46,22 @@ CREATE TABLE
     CONSTRAINT course_fk FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
     CONSTRAINT timing_fk FOREIGN KEY (`timing_id`) REFERENCES `timing` (`id`)
   );
+
+CREATE TABLE
+  `blacklist` (
+    `id` int primary key AUTO_INCREMENT,
+    `email` varchar(255)
+  );
+
+CREATE TABLE
+  `whitelist` (
+    `id` int primary key AUTO_INCREMENT,
+    `email` varchar(255)
+  );
+
+CREATE TABLE
+  `admin_table` (
+    `id` int primary key AUTO_INCREMENT,
+    `admin_email` varchar(255),
+    `text` varchar(1000)
+  );
