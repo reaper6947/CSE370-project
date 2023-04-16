@@ -14,13 +14,20 @@
 .btn{
     background-color: #ff8b1fe7;
     border: #ff8b1fe7;
+    color: white;
+}
+
+.btn:focus{
+    background-color: #ff8b1fe7;
+    border: #ff8b1fe7;
+    color: white;
 }
 
 .btn:hover{
     background-color: #ff8b1f8e;
     border: #ff8b1fad;
     transition: .5s;
-
+    color: white;
 }
 
 .nav-sec{
@@ -61,4 +68,92 @@
 
 .save{
     width: 100px;
+}
+
+.course{
+    width: 1fr;
+}
+
+.fac{
+    width: 1fr;
+}
+
+.prog{
+    width: 1fr;    
+}
+
+.profile{
+    background-color: #212529;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.dropdown-item{
+    color: #FF8A1F;
+}
+
+.dropdown-item:hover{
+    background-color: #212529;
+    color: #ad6119;
+}
+
+.modal{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #2125296b;
+}
+
+.dashboard {
+    animation-name: slideInRight;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    width: 450px;
+    background-color: #212529;
+    height: 100%;
+    z-index: 20;
+}
+
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.modal-body{
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.pic{
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.offcanvas{
+    background-color: #212529;
+}
+
+.h5{
+    color: #ff8b1fe1;
+    font-size: 25px;
+}
+
+.h6{
+    color: rgb(185, 182, 182);
+}
+
+.btn-close{
+    color: white;
 }
