@@ -62,6 +62,16 @@ CREATE TABLE
 CREATE TABLE
   `admin_table` (
     `id` int primary key AUTO_INCREMENT,
-    `admin_email` varchar(255),
+    `admin_email` varchar(255) UNIQUE,
     `text` varchar(1000)
   );
+
+insert into
+  admin_table (admin_email, text)
+values
+  ('mo47da@gmail.com', 'demo text');
+
+insert into
+  admin_table (admin_email, text)
+values
+  ('mahir.tasin07@gmail.com', 'demo text');

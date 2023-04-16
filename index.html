@@ -67,11 +67,21 @@
                     <li class="h5">{{user.name}}</li>
                     <li class="h6">{{user.email}}</li>
                 </div>
+                <div v-if="isAdmin">
+                    <textarea name="message" placeholder="Description" :value="adminText" class="textr"></textarea>
+                    <button class="mssge-bt btn" v-on:click="postText">Submit</button>
+                </div>
+                <div v-if="!isAdmin">
+                    <p>
+                        {{adminText}}
+                    </p>
+                </div>
+
             </div>
         </div>
     </nav>
 
-    <div class="live-tab table-responsive px-4">
+    <div v-if="!isAdmin" class="live-tab table-responsive px-4">
         <table class=" table align-middle table-bordered table-dark table-sm table-hover" id="routine-table">
             <thead class="text-light text-center">
                 <tr>
@@ -172,7 +182,7 @@
         </form>
     </div>
 
-    <div class="table-responsive min-vh-100 p-4">
+    <div v-if="!isAdmin" class="table-responsive min-vh-100 p-4">
         <table id="course-table" class="table table-bordered  table-dark table-sm table-hover text-center ">
             <thead>
                 <tr>
@@ -285,42 +295,31 @@
         </div>
     </div>
 
-    <div class="admin-dash">
-        <div class="ad-dashboard">
-            <div class="modal-body">
-                <img v-bind:src="user.picture" class="pic" alt="">
-                <li class="h5">{{user.name}}</li>
-                <li class="h6">{{user.email}}</li>
-                <textarea name="message" placeholder="Description" class="textr"></textarea>
-                <button class="mssge-bt">Submit</button>
-            </div>
-            
-        </div>
-        <div class="inp">
-            <div>
-                <h2>White-List</h2>
-                <input type="text" placeholder="Input Box 1">
-                <button>Submit</button>
+    <div v-if="isAdmin" class="inp">
+        <div>
+            <h2>White-List</h2>
+            <input type="text" placeholder="Input Box 1">
+            <button class="btn">Submit</button>
 
-                <div class="adding-list">
-                    <li>List Item 1</li>
-                    <li>List Item 2</li>
-                    <li>List Item 3</li>
-                </div class="adding-list">
-            </div>
-            <div>
-                <h2>Black-List</h2>
-                <input type="text" placeholder="Input Box 2">
-                <button>Submit</button>
-                
-                <div class="adding-list">
-                    <li>List Item 1</li>
-                    <li>List Item 2</li>
-                    <li>List Item 3</li>
-                </div class="adding-list">
+            <div class="adding-list">
+                <li>List Item 1</li>
+                <li>List Item 2</li>
+                <li>List Item 3</li>
             </div>
         </div>
+        <div>
+            <h2>Black-List</h2>
+            <input :value="blacklistEmail" type="text" placeholder="Input Box 2">
+            <button class="btn" v-on:click="postBlacklist">Submit</button>
+
+            <div class="adding-list">
+                <li v-for="email in blacklistArr">{{email}} <button class="btn">remove</button></li>
+
+            </div>
+        </div>
+
     </div>
+
 
 
 

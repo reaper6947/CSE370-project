@@ -7,6 +7,10 @@ createApp({
             loggedIn: false,
             auth0Client: null,
             baseUrl: "http://localhost:5000",
+            isAdmin: false,
+            blacklistEmail: "",
+            blacklistArr: ['someont@gmail.com'],
+            adminText: '',
             user: "",
             data: [],
             curr: [],
@@ -396,12 +400,72 @@ createApp({
             } catch (e) {
                 console.log(e)
             }
+        },
+
+        async getAdmin() {
+            try {
+                const data = await fetch(this.baseUrl + "/admin/get", {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+
+                })
+                let resp = await data.json()
+
+                resp.forEach((e) => {
+                    this.adminText = e.text
+                    if (e['admin_email'] == this.user.email) {
+                        this.isAdmin = true
+                    }
+                })
+
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async postBlacklist() {
+            try {
+                const data = await fetch(this.baseUrl + "/admin/blacklist/post", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: this.blacklistEmail })
+                })
+                this.blacklistArr.push(this.blacklistEmail)
+                let resp = await data.json()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+
+        async postText() {
+            try {
+                const data = await fetch(this.baseUrl + "/admin/post/text", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ adminEmail: this.user.email, text: this.adminText })
+                })
+                let resp = await data.json()
+                console.log(resp)
+            } catch (e) {
+                console.log(e)
+            }
         }
+
 
     },
     async mounted() {
         await this.getData()
         await this.configureClient();
+        await this.getAdmin()
 
     }
 }).mount('#tableDiv')

@@ -121,6 +121,31 @@ app.post('/student/course/select', async (req, res) => {
 })
 
 
+app.get('/admin/get', async (req, res) => {
+    try {
+        const db = await dbConnect()
+        const adminInfo = await db.query("SELECT * from admin_table")
+
+        res.json(adminInfo[0])
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+app.post("/admin/post/text", async (req, res) => {
+    try {
+        const db = await dbConnect()
+        console.log(req.body)
+
+        const adminInput = await db.query("UPDATE admin_table set text=? where admin_email=?", [req.body.adminEmail, req.body.text])
+        res.json({ text: req.body.text })
+    } catch (e) {
+        console.log(e)
+
+    }
+})
+
+
 app.put("/student/course/unselect", async (req, res) => {
     try {
         const db = await dbConnect()
@@ -131,6 +156,17 @@ app.put("/student/course/unselect", async (req, res) => {
         const unSelectCourse = await db.query("DELETE FROM enrollment WHERE student_email=? AND course_id=?", [email, course_id])
         const updateCourse = await db.query("UPDATE course set remaining_seat=remaining_seat+1")
         res.json({ message: "course dropped" })
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+app.post('/admin/blacklist/post', async (req, res) => {
+    try {
+        const db = await dbConnect()
+        const adminInput = db.query("INSERT INTO blacklist (email) values(?)", [req.body.email])
+
+        res.json({})
     } catch (e) {
         console.log(e)
     }

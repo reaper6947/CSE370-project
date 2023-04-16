@@ -1,233 +1,225 @@
-.nav{
-    font-weight: 600;
-    font-size: 25px;
-    color: #FF8A1F;
-    cursor: pointer;
+.nav {
+  font-weight: 600;
+  font-size: 25px;
+  color: #ff8a1f;
+  cursor: pointer;
 }
 
-.nav:hover{
-    color: #ad6119;
-    transition: .5s;
-
+.nav:hover {
+  color: #ad6119;
+  transition: 0.5s;
 }
 
-.btn{
-    background-color: #ff8b1fe7;
-    border: #ff8b1fe7;
-    color: white;
+.btn {
+  background-color: #ff8b1fe7;
+  border: #ff8b1fe7;
+  color: white;
 }
 
-.btn:focus{
-    background-color: #ff8b1fe7;
-    border: #ff8b1fe7;
-    color: white;
+.btn:focus {
+  background-color: #ff8b1fe7;
+  border: #ff8b1fe7;
+  color: white;
 }
 
-.btn:hover{
-    background-color: #ff8b1f8e;
-    border: #ff8b1fad;
-    transition: .5s;
-    color: white;
+.btn:hover {
+  background-color: #ff8b1f8e;
+  border: #ff8b1fad;
+  transition: 0.5s;
+  color: white;
 }
 
-.nav-sec{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: rgba(58, 57, 57, 0.247);
+.nav-sec {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgba(58, 57, 57, 0.247);
 }
 
-.live-tab{
-    padding-top: 40px;
-
+.live-tab {
+  padding-top: 40px;
 }
 
-.input-group{
-    padding-top: 10px;
+.input-group {
+  padding-top: 10px;
 }
 
-.time-th{
-    width: 400px;
+.time-th {
+  width: 400px;
 }
 
-.search-inp:focus{
-    border-color: #FF8A1F;
-
+.search-inp:focus {
+  border-color: #ff8a1f;
 }
 
-.days{
-    width: 700px;
+.days {
+  width: 700px;
 }
 
-.seats{
-    width: 150px;
-
+.seats {
+  width: 150px;
 }
 
-.sec{
-    width: 100px;
+.sec {
+  width: 100px;
 }
 
-.save{
-    width: 100px;
+.save {
+  width: 100px;
 }
 
-.course{
-    width: 1fr;
+.course {
+  width: 1fr;
 }
 
-.fac{
-    width: 1fr;
+.fac {
+  width: 1fr;
 }
 
-.prog{
-    width: 1fr;    
+.prog {
+  width: 1fr;
 }
 
-.profile{
-    background-color: #212529;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.profile {
+  background-color: #212529;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.dropdown-item{
-    color: #FF8A1F;
+.dropdown-item {
+  color: #ff8a1f;
 }
 
-.dropdown-item:hover{
-    background-color: #212529;
-    color: #ad6119;
+.dropdown-item:hover {
+  background-color: #212529;
+  color: #ad6119;
 }
 
-.admin-dash{
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #212529;
+.admin-dash {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #212529;
 
-    /*admin access*/
-    /* visibility: hidden; */
+  /* admin access*/
+  /* visibility: hidden; */
 }
 
-.modal-body{
-    padding-top: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+.modal-body {
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
 .dashboard {
-    animation-name: slideInRight;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    width: 450px;
-    background-color: #212529;
-    height: 100%;
-    z-index: 20;
+  animation-name: slideInRight;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  width: 450px;
+  background-color: #212529;
+  height: 100%;
+  z-index: 20;
 }
-
 
 @keyframes slideInRight {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-.ad-dashboard{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 400px;
-    height: 100%;
-    background-color: #444547;
-    box-shadow: rgb(243, 241, 241) 0px 5px 8px;
+.ad-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  background-color: #444547;
+  box-shadow: rgb(243, 241, 241) 0px 5px 8px;
 }
 
-.pic{
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+.pic {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.offcanvas{
-    background-color: #212529;
+.offcanvas {
+  background-color: #212529;
 }
 
-.h5{
-    color: #ff8b1fe1;
-    font-size: 25px;
+.h5 {
+  color: #ff8b1fe1;
+  font-size: 25px;
 }
 
-.h6{
-    color: rgb(185, 182, 182);
+.h6 {
+  color: rgb(185, 182, 182);
 }
 
-.btn-close{
-    color: white;
+.btn-close {
+  color: white;
 }
 
-.inp{
-    display: flex;
-    gap: 350px;
-    padding-left: 35%;
-    color: white;
-    padding-top: 15%;
+.inp {
+  display: flex;
+  gap: 350px;
+  padding-left: 35%;
+  color: white;
+  padding-top: 15%;
 }
 
-.inp h2{
-    color: #FF8A1F;
-    font-size: 50px;
+.inp h2 {
+  color: #ff8a1f;
+  font-size: 50px;
 }
 
-.inp input{
-    display: block;
-    padding: 0 50px 10px 50px;
-    font-size: 18px;
-    margin-right: 25px;
-    margin-bottom: 15px;
-    margin-top: 30px;
-    border-radius: 20px;
-    border-style: none;
+.inp input {
+  display: block;
+  padding: 0 50px 10px 50px;
+  font-size: 18px;
+  margin-right: 25px;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  border-radius: 20px;
+  border-style: none;
 }
 
-.adding-list{
-    margin-top: 30px;
-    list-style: none;
+.adding-list {
+  margin-top: 30px;
+  list-style: none;
 }
 
-.inp li{
-    font-size: 25px;
+.inp li {
+  font-size: 25px;
 }
 
-.admin-dash button{
-    padding: 8px;
-    border-radius: 10px;
-    border-style: none;
-    background-color: #FF8A1F;
-    color: white;
+.admin-dash button {
+  padding: 8px;
+  border-radius: 10px;
+  border-style: none;
+  background-color: #ff8a1f;
+  color: white;
 }
 
-.admin-dash button:hover{
-    background-color: #ad6119;
-
+.admin-dash button:hover {
+  background-color: #ad6119;
 }
 
-.textr{
-    margin-top: 90px;
-    width: 300px;
-    height: 500px;
-    background-color: #242425cb;
-    font-size: 23px;
-    color: white;
+.textr {
+  margin-top: 90px;
+  width: 300px;
+  height: 300px;
+  background-color: #242425cb;
+  font-size: 23px;
+  color: white;
 }
 
-.mssge-bt{
-    margin-top: 20px;
+.mssge-bt {
+  margin-top: 20px;
 }
