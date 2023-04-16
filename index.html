@@ -16,16 +16,16 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
         integrity="sha256-6H5VB5QyLldKH9oMFUmjxw2uWpPZETQXpCkBaDjquMs=" crossorigin="anonymous"></script>
     <script defer src="vue.js" type=""></script>
+
+    <link rel="stylesheet" href="index.css">
     <title>routine app</title>
 </head>
 
 <body class="bg-dark min-vh-100 " id="tableDiv">
-    <nav class="navbar bg-dark border border-success">
+    <nav class="nav-sec navbar p-4">
 
-        <div class="container-fluid">
-            <a class="navbar-brand text-light" href="/">Routine App
-                <!-- <button class="navbar-brand btn text-light border-0 shadow-none">Home</button> -->
-            </a>
+        <div class="container">
+            <a class="nav navbar-brand">Routine App</a>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <!-- <button class="btn btn-primary me-md-2" type="button">Button</button> -->
@@ -57,8 +57,8 @@
         </div>
     </nav>
 
-    <div class="table-responsive">
-        <table class=" table align-middle table-bordered table-dark border-success table-sm table-hover"
+    <div class="live-tab table-responsive px-4">
+        <table class=" table align-middle table-bordered table-dark table-sm table-hover"
             id="routine-table">
             <thead class="text-light text-center">
                 <tr>
@@ -73,7 +73,7 @@
                 </tr>
 
             </thead>
-            <tbody class="text-light text-center p-1">
+            <tbody class="tbod text-light text-center">
                 <tr>
                     <th class="time-th">08:00 AM-09:20 AM</th>
                     <td></td>
@@ -148,22 +148,23 @@
             </tbody>
 
         </table>
-        <form class="">
-            <div class="input-group mb-1 p-1 ">
-                <input type="text" class="form-control bg-dark text-light" v-model='mainInput' placeholder="search">
+
+        <form >
+            <div class="input-group mb-1 pt-4 ">
+                <input type="text" class="search-inp form-control bg-dark text-light" v-model='mainInput' placeholder="search">
                 <!-- <button class="btn btn-outline-secondary" type="button">Reset search</button> -->
 
             </div>
         </form>
     </div>
 
-    <div class="table-responsive min-vh-100 ">
+    <div class="table-responsive min-vh-100 p-4">
         <table id="course-table" class="table table-bordered  table-dark table-sm table-hover text-center ">
             <thead>
                 <tr>
-                    <th>save</th>
+                    <th class="save">save</th>
                     <!-- course code -->
-                    <td class="bg-dark">
+                    <td class="bg-dark courses">
                         <div class="dropdown bg-dark">
                             <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -182,7 +183,7 @@
                         </div>
                     </td>
                     <!-- program -->
-                    <td>
+                    <td class="prog">
                         <div class="dropdown bg-dark">
 
                             <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -203,7 +204,7 @@
                         </div>
                     </td>
                     <!-- faculty -->
-                    <td>
+                    <td class="fac">
                         <div class="dropdown bg-dark">
                             <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -222,12 +223,12 @@
                         </div>
                     </td>
                     <!-- section -->
-                    <td>
+                    <td class="sec">
                         section
                     </td>
-                    <td>Day, Time, Room</td>
+                    <td class="days">Day, Time, Room</td>
                     <!-- <td>Credit</td> -->
-                    <td>Total Seat</td>
+                    <td class="seats">Total Seat</td>
                     <!-- <td>Seat Booked</td>
                     <td>Seat Remaining</td> -->
 
