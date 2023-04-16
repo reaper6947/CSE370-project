@@ -6,7 +6,7 @@ createApp({
             window,
             loggedIn: false,
             auth0Client: null,
-
+            baseUrl: "http://localhost:5000",
             user: "",
             data: [],
             curr: [],
@@ -109,18 +109,25 @@ createApp({
             const facultyInitial = currentRow.childNodes[3].innerText
             const sectionNumber = currentRow.childNodes[4].innerText
             const timings = currentRow.childNodes[6]
+            const totalSeat = currentRow.childNodes[8].innerText
+
             const timingsArr = timings.querySelectorAll('li')
             let timingArrVals = []
             timingsArr.forEach(e => timingArrVals.push(e.innerText))
             const allThs = document.querySelectorAll(".time-th")
 
+
+            const courseObj = { email: this.user.email, courseName, facultyInitial, sectionNumber, totalSeat, timing: [] }
+
             let isAvailable = true
+
             timingArrVals.forEach((e) => {
                 const timingsText = e.slice(3, e.length - 1)
-
                 const day = e.slice(0, 2)
                 const buildingNumber = "UB" + timingsText.split('UB')[1]
                 const timeRange = timingsText.split('UB')[0].slice(0, -1)
+
+
 
                 for (let elem of allThs) {
                     if (elem.textContent.includes(timeRange)) {
@@ -160,12 +167,18 @@ createApp({
                         if (day == 'Sa') index = 7
                         if (isSelected && elem.parentNode.childNodes[index].innerText == '') {
                             elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
+                            courseObj['timing'].push({ day, timeRange, buildingNumber })
                         } else if (isSelected == false && elem.parentNode.childNodes[index].innerText != '') {
                             elem.parentNode.childNodes[index].innerText = ""
                         }
                     }
                 }
             })
+
+            if (isSelected && isAvailable) {
+
+                this.sendCourseDetails(courseObj)
+            }
         },
         async selectProgram(event) {
             event.target.parentNode.parentNode.parentNode.querySelector('a').innerText = event.target.innerText
@@ -266,9 +279,26 @@ createApp({
             if (await this.auth0Client.isAuthenticated()) {
                 this.loggedIn = true
                 const user = await this.auth0Client.getUser();
-                console.log(user)
+
                 this.user = user
 
+            }
+        },
+
+        async sendCourseDetails(obj) {
+
+            try {
+                const data = await fetch(this.baseUrl + "/student/course/post", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+
+            } catch (e) {
+                console.log(e)
             }
         }
 
