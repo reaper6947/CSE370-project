@@ -31,17 +31,17 @@
                 <!-- <button class="btn btn-primary me-md-2" type="button">Button</button> -->
                 <!-- <button  class="btn btn-primary" type="button">login</button> -->
                 <div>
-                    <div v-if="loggedIn" class="dropdown  border-0 dropstart ">
+                    <div v-if="loggedIn" class=" dropdown border-0 dropstart ">
                         <button class="btn btn-secondary dropdown-toggle bg-dark shadow-none border-0" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img width="35" class="rounded-circle" v-bind:src="user.picture" alt="stuff">
                         </button>
-                        <ul class="dropdown-menu text-light">
+                        <ul class="profile dropdown-menu text-light">
                             <li><a class="dropdown-item" href="#">{{user.name}}</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#exampleModal"
                                     href="#">Profile</a></li>
                             <li><a v-on:click="logout" class="dropdown-item" href="#">Logout</a></li>
 
@@ -49,10 +49,24 @@
                     </div>
 
 
-                    <button v-else v-on:click="login" class="btn btn-primary" type="button">login</button>
+                    <button v-else v-on:click="login" class="btn" type="button">login</button>
                     <!-- <button v-else class="btn btn-primary" type="button">logout</button> -->
                 </div>
 
+            </div>
+        </div>
+          
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="exampleModal" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="modal-body">
+                <img v-bind:src="user.picture" class="pic" alt="">
+                <li class="h5">{{user.name}}</li>
+                <li class="h6">{{user.email}}</li>
+              </div>
             </div>
         </div>
     </nav>
@@ -270,7 +284,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+
+
+
+
+
+    <!-- <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -284,11 +303,11 @@
                     <li class="h5">EMAIL: {{user.email}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-close btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 </body>
