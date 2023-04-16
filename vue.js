@@ -166,17 +166,16 @@ createApp({
                     }
                 }
             })
-
-            // console.log(isSelected, courseName, facultyInitial, sectionNumber, timingArrVals)
-
         },
         async selectProgram(event) {
             event.target.parentNode.parentNode.parentNode.querySelector('a').innerText = event.target.innerText
-            console.log(event.target.parentNode.parentNode.parentNode.querySelector('a'))
             this.filterArg["Program"] = [event.target.innerText]
         },
         async resetProgram(event) {
             this.filterArg["Program"] = []
+            event.target.parentNode.parentNode.parentNode.querySelector('a').innerText = "Program"
+
+
         },
         async selectFaculty(event) {
             if (event.target.checked) {
