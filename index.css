@@ -96,12 +96,26 @@
     color: #ad6119;
 }
 
-.modal{
+.admin-dash{
+    position: fixed;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #2125296b;
+    background-color: #212529;
+
+    /*admin access*/
+    /* visibility: hidden; */
+}
+
+.modal-body{
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
 }
 
 .dashboard {
@@ -124,13 +138,14 @@
     }
 }
 
-.modal-body{
-    padding-top: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+.ad-dashboard{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background-color: #444547;
+    box-shadow: rgb(243, 241, 241) 0px 5px 8px;
 }
 
 .pic{
@@ -156,4 +171,63 @@
 
 .btn-close{
     color: white;
+}
+
+.inp{
+    display: flex;
+    gap: 350px;
+    padding-left: 35%;
+    color: white;
+    padding-top: 15%;
+}
+
+.inp h2{
+    color: #FF8A1F;
+    font-size: 50px;
+}
+
+.inp input{
+    display: block;
+    padding: 0 50px 10px 50px;
+    font-size: 18px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    border-radius: 20px;
+    border-style: none;
+}
+
+.adding-list{
+    margin-top: 30px;
+    list-style: none;
+}
+
+.inp li{
+    font-size: 25px;
+}
+
+.admin-dash button{
+    padding: 8px;
+    border-radius: 10px;
+    border-style: none;
+    background-color: #FF8A1F;
+    color: white;
+}
+
+.admin-dash button:hover{
+    background-color: #ad6119;
+
+}
+
+.textr{
+    margin-top: 90px;
+    width: 300px;
+    height: 500px;
+    background-color: #242425cb;
+    font-size: 23px;
+    color: white;
+}
+
+.mssge-bt{
+    margin-top: 20px;
 }

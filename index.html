@@ -285,6 +285,42 @@
         </div>
     </div>
 
+    <div class="admin-dash">
+        <div class="ad-dashboard">
+            <div class="modal-body">
+                <img v-bind:src="user.picture" class="pic" alt="">
+                <li class="h5">{{user.name}}</li>
+                <li class="h6">{{user.email}}</li>
+                <textarea name="message" placeholder="Description" class="textr"></textarea>
+                <button class="mssge-bt">Submit</button>
+            </div>
+            
+        </div>
+        <div class="inp">
+            <div>
+                <h2>White-List</h2>
+                <input type="text" placeholder="Input Box 1">
+                <button>Submit</button>
+
+                <div class="adding-list">
+                    <li>List Item 1</li>
+                    <li>List Item 2</li>
+                    <li>List Item 3</li>
+                </div class="adding-list">
+            </div>
+            <div>
+                <h2>Black-List</h2>
+                <input type="text" placeholder="Input Box 2">
+                <button>Submit</button>
+                
+                <div class="adding-list">
+                    <li>List Item 1</li>
+                    <li>List Item 2</li>
+                    <li>List Item 3</li>
+                </div class="adding-list">
+            </div>
+        </div>
+    </div>
 
 
 
