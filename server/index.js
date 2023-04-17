@@ -149,7 +149,7 @@ app.post("/admin/post/text", async (req, res) => {
         const db = await dbConnect()
         console.log(req.body)
 
-        const adminInput = await db.query("UPDATE admin_table set text=? where admin_email=?", [req.body.adminEmail, req.body.text])
+        const adminInput = await db.query("UPDATE admin_table set text=?", [req.body.text])
         res.json({ text: req.body.text })
     } catch (e) {
         console.log(e)

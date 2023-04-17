@@ -425,10 +425,11 @@ createApp({
 
                     if (e['admin_email'] == this.user.email) {
                         this.isAdmin = true
-                        this.adminText = e.text
+
                     }
+                    document.querySelector('.anothertext').innerText = e.text
                 })
-                console.log(this.adminText)
+
 
             } catch (e) {
                 console.log(e)
@@ -510,13 +511,15 @@ createApp({
 
         async postText() {
             try {
+                console.log()
+
                 const data = await fetch(this.baseUrl + "/admin/post/text", {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ adminEmail: this.user.email, text: this.adminText })
+                    body: JSON.stringify({ adminEmail: this.user.email, text: document.querySelector('.textr').value })
                 })
                 let resp = await data.json()
                 console.log(resp)
