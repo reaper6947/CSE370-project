@@ -71,6 +71,6 @@ values
   ('mahir.tasin07@gmail.com', 'demo text');
 
 insert into
-  admin_table (admin_email, text)
+  blacklist (email, text)
 values
   ('anamirtiza@gmail.com', 'demo text');
