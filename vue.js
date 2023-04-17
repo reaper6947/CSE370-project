@@ -245,8 +245,6 @@ createApp({
             }
         },
 
-
-
         async login(targetUrl) {
             try {
                 console.log("Logging in", targetUrl);
@@ -279,10 +277,6 @@ createApp({
                 console.log("Log out failed", err);
             }
         },
-
-
-
-
 
 
         async configureClient() {
@@ -348,6 +342,14 @@ createApp({
                 console.log(e)
             }
         },
+
+
+
+
+
+
+
+
         async sendUnselectedCourseDetails(obj) {
 
             try {
@@ -420,11 +422,13 @@ createApp({
                 let resp = await data.json()
 
                 resp.forEach((e) => {
-                    this.adminText = e.text
+
                     if (e['admin_email'] == this.user.email) {
                         this.isAdmin = true
+                        this.adminText = e.text
                     }
                 })
+                console.log(this.adminText)
 
             } catch (e) {
                 console.log(e)

@@ -52,8 +52,6 @@ app.post('/student/course/select', async (req, res) => {
         } else {
             userObj['email'] = userObj[0][0]['email']
         }
-
-
         if (courseObj[0].length == 0) {
             courseObj = await db.query("INSERT INTO course (course_code,section_number,faculty_initial,total_seat,remaining_seat) VALUES (?,?,?,?,?) ", [courseName, sectionNumber, facultyInitial, parseInt(totalSeat), parseInt(totalSeat) - 1])
             courseObj['courseId'] = courseObj[0]['insertId']
@@ -68,7 +66,6 @@ app.post('/student/course/select', async (req, res) => {
             }
 
         }
-
         timing.forEach(async (elem) => {
 
             timeArr = elem.timeRange.split("-")
@@ -86,9 +83,7 @@ app.post('/student/course/select', async (req, res) => {
 
                     timeList['id'] = timeList[0][0]['id']
                 }
-
                 const insert_course = await db.query("INSERT INTO taken (course_id,timing_id) VALUES (?,?) ON DUPLICATE KEY UPDATE course_id=course_id", [courseObj['courseId'], timeList['id']])
-
             } catch (e) {
                 console.log(e)
             }
@@ -121,29 +116,7 @@ app.post('/student/course/select', async (req, res) => {
 })
 
 
-app.get('/admin/get', async (req, res) => {
-    try {
-        const db = await dbConnect()
-        const adminInfo = await db.query("SELECT * from admin_table")
 
-        res.json(adminInfo[0])
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-app.post("/admin/post/text", async (req, res) => {
-    try {
-        const db = await dbConnect()
-        console.log(req.body)
-
-        const adminInput = await db.query("UPDATE admin_table set text=? where admin_email=?", [req.body.adminEmail, req.body.text])
-        res.json({ text: req.body.text })
-    } catch (e) {
-        console.log(e)
-
-    }
-})
 
 
 app.put("/student/course/unselect", async (req, res) => {
@@ -161,9 +134,30 @@ app.put("/student/course/unselect", async (req, res) => {
     }
 })
 
+app.get('/admin/get', async (req, res) => {
+    try {
+        const db = await dbConnect()
+        const adminInfo = await db.query("SELECT * from admin_table")
+
+        res.json(adminInfo[0])
+    } catch (e) {
+        console.log(e)
+    }
+})
+app.post("/admin/post/text", async (req, res) => {
+    try {
+        const db = await dbConnect()
+        console.log(req.body)
+
+        const adminInput = await db.query("UPDATE admin_table set text=? where admin_email=?", [req.body.adminEmail, req.body.text])
+        res.json({ text: req.body.text })
+    } catch (e) {
+        console.log(e)
+
+    }
+})
 app.post('/admin/blacklist/post', async (req, res) => {
     try {
-
         const db = await dbConnect()
         const adminInput = await db.query("INSERT INTO blacklist (email) values(?)", [req.body.email])
         res.json({})
@@ -171,7 +165,6 @@ app.post('/admin/blacklist/post', async (req, res) => {
         console.log(e)
     }
 })
-
 app.get('/admin/blacklist/get', async (req, res) => {
     try {
 
@@ -189,6 +182,8 @@ app.post('/admin/blacklist/remove', async (req, res) => {
     const removeEmail = db.query("DELETE FROM blacklist where email=?", [req.body.email])
     res.json({})
 })
+
+
 
 app.post("/student/course/get-saved-data", async (req, res) => {
     const db = await dbConnect()

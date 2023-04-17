@@ -74,11 +74,12 @@
                     <li class="h6">{{user.email}}</li>
                 </div>
                 <div v-if="isAdmin">
-                    <textarea name="message" placeholder="Description" :value="adminText" class="textr"></textarea>
+                    <textarea name="message" placeholder="Description" :textContent="adminText"
+                        class="textr"></textarea>
                     <button class="mssge-bt btn" v-on:click="postText">Submit</button>
                 </div>
                 <div v-if="!isAdmin">
-                    <p>
+                    <p class="text-light">
                         {{adminText}}
                     </p>
                 </div>
