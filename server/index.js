@@ -116,9 +116,6 @@ app.post('/student/course/select', async (req, res) => {
 })
 
 
-
-
-
 app.put("/student/course/unselect", async (req, res) => {
     try {
         const db = await dbConnect()

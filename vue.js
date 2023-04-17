@@ -204,7 +204,7 @@ createApp({
             if (isSelected == false && this.user != "") {
 
                 await this.sendUnselectedCourseDetails({ ...courseObj, email: this.user.email, name: this.user.name })
-                this.takenCourseArr.splice(this.takenCourseArr.indexOf(obj.courseName), 1);
+                this.takenCourseArr.splice(this.takenCourseArr.indexOf(courseObj.courseName), 1);
             }
 
 
@@ -383,7 +383,7 @@ createApp({
                     body: JSON.stringify(this.user)
                 })
                 let resp = await data.json()
-                console.log()
+
                 const courseRow = document.querySelectorAll('.course-row')
                 resp.forEach((savedCourse) => {
                     courseRow.forEach((e) => {
@@ -402,6 +402,37 @@ createApp({
                     })
                     // console.log(savedCourse)
                 })
+
+                const allThs = document.querySelectorAll(".time-th")
+                resp.forEach((savedCourse) => {
+
+                    console.log(savedCourse)
+                    const start = savedCourse.start_time
+                    const end = savedCourse.end_time
+                    const day = savedCourse.day_of_week
+                    const sectionNumber = savedCourse.section_number
+                    const facultyInitial = savedCourse.faculty_initial
+                    const buildingNumber = savedCourse.building_code
+                    const timeRange = start + "-" + end
+                    const courseName = savedCourse.course_code
+
+                    for (let elem of allThs) {
+                        if (elem.textContent.includes(timeRange)) {
+                            let index
+                            if (day == "Su") index = 1
+                            if (day == 'Mo') index = 2
+                            if (day == 'Tu') index = 3
+                            if (day == 'We') index = 4
+                            if (day == 'Th') index = 5
+                            if (day == 'Fr') index = 6
+                            if (day == 'Sa') index = 7
+                            elem.parentNode.childNodes[index].innerText = `${courseName}-${sectionNumber}-${facultyInitial}-${buildingNumber}`
+                            this.takenCourseArr.push(courseName)
+
+                        }
+                    }
+                })
+
 
                 console.log(resp)
             } catch (e) {
