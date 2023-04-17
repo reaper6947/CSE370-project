@@ -71,6 +71,6 @@ values
   ('mahir.tasin07@gmail.com', 'demo text');
 
 insert into
-  blacklist (email, text)
+  blacklist (email)
 values
-  ('anamirtiza@gmail.com', 'demo text');
+  ('anamirtiza@gmail.com');
