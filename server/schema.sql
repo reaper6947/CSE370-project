@@ -73,4 +73,4 @@ values
 insert into
   admin_table (admin_email, text)
 values
-  ('anamirtiza@gmail.com, 'demo text');
+  ('anamirtiza@gmail.com', 'demo text');
